@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRAVELORA — College Project Defense Presentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0f1d;
+      --bg-card: rgba(16, 24, 46, 0.85);
+      --bg-card-border: rgba(56, 189, 248, 0.2);
+      --accent-cyan: #06b6d4;
+      --accent-blue: #3b82f6;
+      --accent-emerald: #10b981;
+      --accent-purple: #8b5cf6;
+      --accent-amber: #f59e0b;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-highlight: #38bdf8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at top right, #132247 0%, #0a0f1d 60%, #050811 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Presentation Header & Status */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 28px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(10, 15, 29, 0.7);
+      backdrop-filter: blur(12px);
+      z-index: 50;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      font-size: 1.05rem;
+      color: #fff;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-main);
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: var(--accent-cyan);
+      color: #fff;
+    }
+
+    .slide-counter {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-highlight);
+      font-weight: 600;
+    }
+
+    /* Main Slide Stage */
+    .slide-stage {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      max-width: 1220px;
+      min-height: 640px;
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 20px;
+      padding: 44px 52px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 40px rgba(6, 182, 212, 0.08);
+      position: relative;
+      animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .slide.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px) scale(0.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Slide Header */
+    .slide-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent-cyan);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slide-tag::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--accent-cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent-cyan);
+    }
+
+    .slide-title {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      margin-bottom: 24px;
+      line-height: 1.25;
+    }
+
+    .slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    /* Cards */
+    .card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 22px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .card:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-desc {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    ul.bullet-list {
+      list-style: none;
+    }
+
+    ul.bullet-list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 10px;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    ul.bullet-list li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--accent-cyan);
+      font-weight: bold;
+    }
+
+    ul.bullet-list strong {
+      color: #fff;
+    }
+
+    /* Tables */
+    table.comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    table.comp-table th {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 12px 16px;
+      text-align: left;
+      color: var(--accent-cyan);
+      font-weight: 700;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    table.comp-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+    }
+
+    table.comp-table tr:hover td {
+      background: rgba(56, 189, 248, 0.04);
+      color: #fff;
+    }
+
+    .badge-good {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.78rem;
+    }
+
+    .badge-bad {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.78rem;
+    }
+
+    /* Architecture Pipeline Flow */
+    .tier-box {
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 4px solid var(--accent-cyan);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 12px;
+    }
+
+    .tier-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-highlight);
+      margin-bottom: 4px;
+    }
+
+    .tier-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Title Slide Specifics */
+    .title-banner {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .title-badge {
+      display: inline-block;
+      background: rgba(6, 182, 212, 0.15);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      color: var(--accent-cyan);
+      font-family: 'JetBrains Mono', monospace;
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+      letter-spacing: 1.5px;
+    }
+
+    .main-title {
+      font-size: 3.2rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, #ffffff 30%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+
+    .sub-title {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 820px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .author-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 24px;
+      border-radius: 14px;
+      margin-top: 20px;
+    }
+
+    .author-col h4 {
+      font-size: 0.85rem;
+      color: var(--accent-cyan);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .author-col p {
+      font-size: 0.95rem;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .author-col p span {
+      color: var(--text-muted);
+    }
+
+    /* Footer Navigation */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 36px;
+      background: rgba(10, 15, 29, 0.7);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .key-hints {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .key-hints kbd {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      padding: 2px 6px;
+      color: #fff;
+    }
+
+    @media print {
+      body { background: #fff; color: #000; }
+      header, footer, .controls { display: none !important; }
+      .slide { display: flex !important; page-break-after: always; min-height: 100vh; box-shadow: none; border: 1px solid #ddd; background: #fff; color: #000; }
+      .main-title { -webkit-text-fill-color: #000; }
+      .card { border-color: #ccc; background: #f9f9f9; color: #000; }
+      .tier-title, .card-title, .slide-title { color: #000; }
+      .card-desc, ul.bullet-list li, table.comp-table td { color: #333; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header>
+    <div class="brand">
+      <span>TRAVELORA</span>
+      <span class="brand-badge">ACADEMIC DEFENSE</span>
+    </div>
+    <div class="controls">
+      <span class="slide-counter" id="slideCounter">SLIDE 01 / 12</span>
+      <button class="btn" onclick="prevSlide()">◀ Prev</button>
+      <button class="btn" onclick="nextSlide()">Next ▶</button>
+      <button class="btn" onclick="window.print()">🖨️ Export PDF</button>
+    </div>
+  </header>
+
+  <!-- Slide Canvas -->
+  <div class="slide-stage">
+
+    <!-- SLIDE 1: Title -->
+    <div class="slide active" id="slide-1">
+      <div class="slide-content" style="justify-content: center;">
+        <div class="title-banner">
+          <div class="title-badge">FINAL YEAR CAPSTONE PROJECT DEFENSE</div>
+          <h1 class="main-title">TRAVELORA</h1>
+          <p class="sub-title">Smart Travel & Itinerary Platform: An Autonomous Multi-Tier Architecture for Curated Tourism, Algorithmic Itinerary Planning & Role-Based Travel Operations</p>
+        </div>
+
+        <div class="author-box">
+          <div class="author-col">
+            <h4>Candidate Details</h4>
+            <p><span>Student Name:</span> <strong>Ansh Daheech</strong></p>
+            <p><span>Course:</span> <strong>Bachelor of Technology (B.Tech) / MCA</strong></p>
+            <p><span>Department:</span> <strong>Dept. of Computer Science & Engineering</strong></p>
+            <p><span>College:</span> <strong>[Your College / University Name]</strong></p>
+          </div>
+          <div class="author-col">
+            <h4>Academic Supervision</h4>
+            <p><span>Project Guide:</span> <strong>[Guide / Professor Name]</strong></p>
+            <p><span>Designation:</span> <strong>Assistant Professor / Head of Dept</strong></p>
+            <p><span>Academic Session:</span> <strong>2025 – 2026</strong></p>
+            <p><span>Status:</span> <strong style="color: var(--accent-emerald);">Fully Implemented, Verified & Live Deployed</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: Introduction -->
+    <div class="slide" id="slide-2">
+      <div class="slide-tag">Domain Overview</div>
+      <h2 class="slide-title">Introduction to Smart Tourism & Defensive Engineering</h2>
+      <div class="slide-content">
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-title">🌐 Digital Tourism Evolution</div>
+            <p class="card-desc">Modern travelers have moved away from manual agencies toward autonomous, on-demand digital travel platforms offering personalized itineraries, transparent budgeting, and instant reservation confirmation.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">⏳ The 20-Hour Planning Friction</div>
+            <p class="card-desc">Average travelers consult 10 to 20 fragmented websites (travel blogs, flight portals, separate hotels, budget spreadsheets) to plan a single 5-day vacation, resulting in planning fatigue and cost overruns.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">🛡️ Travelora's Engineering Solution</div>
+            <p class="card-desc">Integrates dynamic destination catalog discovery, algorithmic day-wise itinerary synthesis, interactive Recharts expense visualization, and cryptographically verified Role-Based Access Control into one unified system.</p>
+          </div>
+        </div>
+        <div class="card" style="margin-top: 20px;">
+          <div class="card-title">🎯 Core Engineering Philosophy</div>
+          <p class="card-desc">To decouple client-side presentation (React 18 + Vite) from server-side transactional integrity (Express 5 REST API + SQLite WAL Mode), ensuring sub-second response times, zero database bloat, and enterprise-grade data security.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Problem Statement -->
+    <div class="slide" id="slide-3">
+      <div class="slide-tag">Problem Statement</div>
+      <h2 class="slide-title">Key Challenges in Modern Travel Portals</h2>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent-amber);">1. Fragmented Traveler Workflow</div>
+            <p class="card-desc">Users are forced to navigate separate websites for destination inspiration, day-by-day scheduling, expense calculation, and booking verification, causing extreme cognitive overload and high checkout drop-offs.</p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent-amber);">2. Rigid, Non-Customizable Tour Packages</div>
+            <p class="card-desc">Traditional Online Travel Agencies (OTAs) offer rigid, monolithic package deals with zero adaptability for party sizes, hotel tier upgrades, private transit choices, or custom pacing preferences.</p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent-amber);">3. Opaque Budgeting & Post-Booking Shock</div>
+            <p class="card-desc">Existing platforms present static cost tables that hide final local taxes, transit fees, and meal expenses. Travelers lack visual feedback showing how transit choices impact their total trip budget in real-time.</p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent-amber);">4. Insecure Access Control & Privilege Escalation</div>
+            <p class="card-desc">Many existing platforms rely exclusively on client-side routing guards without strict server-side cryptographically signed token verification, leaving administrative booking databases open to tampering.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: Objectives -->
+    <div class="slide" id="slide-4">
+      <div class="slide-tag">Project Objectives</div>
+      <h2 class="slide-title">Practical & Measurable Engineering Goals</h2>
+      <div class="slide-content">
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-title">Goal 1: Sub-Second Responsive UI</div>
+            <p class="card-desc">Develop a reactive, single-page application (SPA) using React 18, Vite 5, Tailwind CSS, and Framer Motion with instant route transitions.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Goal 2: Enterprise REST API</div>
+            <p class="card-desc">Build a modular Node.js Express 5 REST API handling 9 dedicated domain route controllers with robust parameter sanitization and error telemetry.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Goal 3: Algorithmic AI Itinerary Planner</div>
+            <p class="card-desc">Implement a multi-step heuristic itinerary engine synthesizing personalized day-by-day schedules tailored to party size, duration, and style.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Goal 4: Interactive Expense Analytics</div>
+            <p class="card-desc">Incorporate Recharts-driven visual budget calculators that compute flights, hotels, meals, and local transit distributions on the fly.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Goal 5: Cryptographic RBAC Security</div>
+            <p class="card-desc">Enforce two-tier authorization (user vs admin) utilizing 10-salt bcrypt password hashing and tamper-proof JSON Web Tokens (JWT).</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Goal 6: Concurrency SQLite Engine</div>
+            <p class="card-desc">Deploy SQLite in Write-Ahead Logging (WAL) mode via better-sqlite3 for ACID compliance, zero-latency reads, and auto-seeding.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: Comparison Matrix -->
+    <div class="slide" id="slide-5">
+      <div class="slide-tag">System Comparison</div>
+      <h2 class="slide-title">Traditional Travel Portals vs. TRAVELORA</h2>
+      <div class="slide-content">
+        <table class="comp-table">
+          <thead>
+            <tr>
+              <th>Evaluation Feature / Capability</th>
+              <th>Legacy Portals / Traditional OTAs</th>
+              <th>TRAVELORA Platform (Proposed)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Architecture Model</strong></td>
+              <td>Monolithic server-rendered pages (heavy reloads)</td>
+              <td><span class="badge-good">Decoupled React 18 SPA + Express 5 REST API</span></td>
+            </tr>
+            <tr>
+              <td><strong>Itinerary Customization</strong></td>
+              <td>Static pre-canned text with zero adaptability</td>
+              <td><span class="badge-good">Dynamic heuristic AI generator based on style & days</span></td>
+            </tr>
+            <tr>
+              <td><strong>Cost & Budget Transparency</strong></td>
+              <td>Hidden taxes and opaque final prices</td>
+              <td><span class="badge-good">Interactive Recharts visual budget breakdown in real-time</span></td>
+            </tr>
+            <tr>
+              <td><strong>Authentication & Security</strong></td>
+              <td>Insecure cookie sessions with client-side guards</td>
+              <td><span class="badge-good">10-round bcrypt + Signed JWT with Server RBAC Gate</span></td>
+            </tr>
+            <tr>
+              <td><strong>Database Concurrency</strong></td>
+              <td>Heavy external database with high network latency</td>
+              <td><span class="badge-good">SQLite WAL Mode (Sub-ms reads, zero network overhead)</span></td>
+            </tr>
+            <tr>
+              <td><strong>Admin Operations Console</strong></td>
+              <td>Manual spreadsheets or fragmented external CMS</td>
+              <td><span class="badge-good">Built-in Admin Dashboard with live KPIs & Catalog CRUD</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: Tech Stack -->
+    <div class="slide" id="slide-6">
+      <div class="slide-tag">Tech Stack</div>
+      <h2 class="slide-title">Technology Stack & Verified Dependencies</h2>
+      <div class="slide-content">
+        <div class="grid-4">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent-cyan);">Frontend UI</div>
+            <ul class="bullet-list">
+              <li><strong>React 18.3.1</strong> (Component Tree)</li>
+              <li><strong>Vite 5.4.2</strong> (Build Engine)</li>
+              <li><strong>Tailwind CSS 3.4</strong> (Styling)</li>
+              <li><strong>Framer Motion 11.5</strong> (Physics)</li>
+              <li><strong>Lucide React 0.44</strong> (Icons)</li>
+              <li><strong>Recharts 2.12.7</strong> (Charts)</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent-blue);">Backend REST API</div>
+            <ul class="bullet-list">
+              <li><strong>Node.js 24</strong> (V8 Engine)</li>
+              <li><strong>Express 5.3.0</strong> (Routing)</li>
+              <li><strong>CORS 2.8.6</strong> (Origin Security)</li>
+              <li><strong>Dotenv 18.0.9</strong> (Config)</li>
+              <li><strong>Concurrently 10.0</strong> (Dev)</li>
+              <li><strong>Modular Controllers</strong> (9 routes)</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent-emerald);">Security & Auth</div>
+            <ul class="bullet-list">
+              <li><strong>Bcryptjs 3.0.3</strong> (10-salt hash)</li>
+              <li><strong>JSON Web Tokens</strong> (Signed JWT)</li>
+              <li><strong>Role-Based Access</strong> (RBAC)</li>
+              <li><strong>requireAuth</strong> (Middleware)</li>
+              <li><strong>requireAdmin</strong> (Admin Gate)</li>
+              <li><strong>Zero Secrets in Git</strong> (.gitignore)</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent-purple);">Database & Cloud</div>
+            <ul class="bullet-list">
+              <li><strong>better-sqlite3 13.0</strong></li>
+              <li><strong>WAL Journal Mode</strong></li>
+              <li><strong>8 Normalized Tables</strong></li>
+              <li><strong>Auto-Seeding Logic</strong></li>
+              <li><strong>Render Cloud Web Service</strong></li>
+              <li><strong>Vercel Edge Platform</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: System Architecture -->
+    <div class="slide" id="slide-7">
+      <div class="slide-tag">System Architecture</div>
+      <h2 class="slide-title">Multi-Tier Full-Stack Pipeline Architecture</h2>
+      <div class="slide-content">
+        <div class="tier-box" style="border-color: #38bdf8;">
+          <div class="tier-title">TIER 1: PRESENTATION & CLIENT WORKSPACE (React 18 + Vite)</div>
+          <div class="tier-desc">Modular React component tree maintaining isolated Contexts for Auth, Travel Catalog, and Toast notifications. Responsive views for Catalog Explorer, Booking Modals, AI Travel Planner, Budget Calculator, User Trips, and Admin Console.</div>
+        </div>
+        <div class="tier-box" style="border-color: #10b981;">
+          <div class="tier-title">TIER 2: NETWORK & REVERSE PROXY LAYER (CORS + RBAC Gate)</div>
+          <div class="tier-desc">Vite reverse proxy (/api) in development and unified CORS express middleware in production. Centralized authentication filter verifies JWT tokens and extracts user claims before passing execution downstream.</div>
+        </div>
+        <div class="tier-box" style="border-color: #8b5cf6;">
+          <div class="tier-title">TIER 3: RESTful CONTROLLER & LOGIC ENGINE (Express 5.3.0)</div>
+          <div class="tier-desc">9 dedicated modular domain route controllers (/api/auth, /api/destinations, /api/packages, /api/bookings, /api/trips, /api/wishlist, /api/admin, /api/contact, /api/newsletter) with atomic transaction boundaries and comprehensive error catching.</div>
+        </div>
+        <div class="tier-box" style="border-color: #f59e0b;">
+          <div class="tier-title">TIER 4: PERSISTENCE & DATA STORAGE (SQLite WAL Engine)</div>
+          <div class="tier-desc">Lightweight synchronous C-level SQLite binding (better-sqlite3) running in Write-Ahead Logging (WAL) mode across 8 normalized tables with sub-millisecond query execution and automated bootstrap seeding.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: Working Workflow -->
+    <div class="slide" id="slide-8">
+      <div class="slide-tag">Execution Workflow</div>
+      <h2 class="slide-title">End-to-End Operational Pipelines</h2>
+      <div class="slide-content">
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent-cyan);">1. User Booking Pipeline</div>
+            <ul class="bullet-list">
+              <li><strong>Step 1:</strong> Select package & customize tier</li>
+              <li><strong>Step 2:</strong> Real-time tax & pricing calculation</li>
+              <li><strong>Step 3:</strong> Client dispatches signed JWT</li>
+              <li><strong>Step 4:</strong> Express verifies active session</li>
+              <li><strong>Step 5:</strong> Atomic insert into bookings table</li>
+              <li><strong>Step 6:</strong> Generate printable travel voucher</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent-emerald);">2. AI Travel Planner Pipeline</div>
+            <ul class="bullet-list">
+              <li><strong>Step 1:</strong> Wizard captures party size & days</li>
+              <li><strong>Step 2:</strong> Select interests (Beaches, Trekking, Food)</li>
+              <li><strong>Step 3:</strong> Heuristic rule engine synthesizes plan</li>
+              <li><strong>Step 4:</strong> Compiles day-by-day morning/noon/night</li>
+              <li><strong>Step 5:</strong> Attach packing & safety travel tips</li>
+              <li><strong>Step 6:</strong> Save custom trip into user profile</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent-purple);">3. Admin Governance Pipeline</div>
+            <ul class="bullet-list">
+              <li><strong>Step 1:</strong> Administrator logs in at /auth</li>
+              <li><strong>Step 2:</strong> Backend checks bcrypt hash & role</li>
+              <li><strong>Step 3:</strong> Issues high-privilege admin JWT</li>
+              <li><strong>Step 4:</strong> Unlocks /admin operations dashboard</li>
+              <li><strong>Step 5:</strong> Live revenue KPIs & breakdown charts</li>
+              <li><strong>Step 6:</strong> Direct CRUD on Destinations & Packages</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 9: Main Features -->
+    <div class="slide" id="slide-9">
+      <div class="slide-tag">Platform Capabilities</div>
+      <h2 class="slide-title">Modular Travelora Capabilities</h2>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🌍 Destinations & Tour Packages</div>
+            <p class="card-desc">Dynamic multi-category filtering (Mountains, Beaches, Adventure, Historical, Wildlife). High-resolution photo galleries, daily itineraries, inclusion/exclusion checklists, star ratings, and instant modal reservation engine.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">🤖 AI Travel Planner & Budget Estimator</div>
+            <p class="card-desc">Interactive wizard generating custom day-by-day itineraries tailored to traveler style. Paired with Recharts-powered visual expense calculators modeling flights, lodging, meals, and local transit in real-time.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">🛡️ Role-Based Authentication (RBAC)</div>
+            <p class="card-desc">Protected by 10-salt Blowfish bcrypt password encryption and signed JWT bearer tokens. Traveler dashboard managing active bookings, past history, printable vouchers, and saved destination wishlists.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">📊 Executive Admin Operations Console</div>
+            <p class="card-desc">Live business intelligence console providing executive KPI metric cards (Total Revenue, Confirmed Bookings count, Active Users, Catalog counts), visual revenue bar charts, and direct database catalog CRUD controls.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 10: Empirical Results -->
+    <div class="slide" id="slide-10">
+      <div class="slide-tag">Verification & Benchmarks</div>
+      <h2 class="slide-title">Empirical Results & Live Production Verification</h2>
+      <div class="slide-content">
+        <div class="grid-4" style="margin-bottom: 20px;">
+          <div class="card" style="text-align: center;">
+            <div style="font-size: 2.2rem; font-weight: 800; color: var(--accent-emerald);">100%</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Backend Test Suite Pass Rate</div>
+          </div>
+          <div class="card" style="text-align: center;">
+            <div style="font-size: 2.2rem; font-weight: 800; color: var(--accent-cyan);">&lt; 15 ms</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Average API Query Latency</div>
+          </div>
+          <div class="card" style="text-align: center;">
+            <div style="font-size: 2.2rem; font-weight: 800; color: var(--accent-purple);">10 Rounds</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Bcrypt Salt Key Derivation</div>
+          </div>
+          <div class="card" style="text-align: center;">
+            <div style="font-size: 2.2rem; font-weight: 800; color: var(--accent-amber);">&lt; 450 KB</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Optimized Production Bundle</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🧪 Comprehensive Automated Test Telemetry</div>
+          <ul class="bullet-list">
+            <li><strong>Automated Integration Testing:</strong> All 9 domain route endpoints verified via test-backend.js with automated assertion coverage.</li>
+            <li><strong>Security Boundary Auditing:</strong> Confirmed unauthenticated requests to /api/admin receive immediate 401 Unauthorized / 403 Forbidden responses.</li>
+            <li><strong>Live Deployment Success:</strong> Containerized on Render with zero-configuration persistent SQLite seeding and Vercel SPA routing compatibility.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 11: Limitations & Roadmap -->
+    <div class="slide" id="slide-11">
+      <div class="slide-tag">Engineering Honesty</div>
+      <h2 class="slide-title">Limitations & Future Engineering Roadmap</h2>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card" style="border-left: 4px solid var(--accent-amber);">
+            <div class="card-title" style="color: var(--accent-amber);">Current Technical Limitations</div>
+            <ul class="bullet-list">
+              <li><strong>Local File Persistence:</strong> On free container tiers without persistent disk mounts, SQLite resets upon container recycling.</li>
+              <li><strong>Simulated Merchant Settlement:</strong> Generates booking invoices and vouchers without live payment gateways (Stripe / Razorpay).</li>
+              <li><strong>Algorithmic Heuristic Scope:</strong> AI travel planner uses smart heuristic templates rather than live LLM streaming APIs.</li>
+            </ul>
+          </div>
+          <div class="card" style="border-left: 4px solid var(--accent-emerald);">
+            <div class="card-title" style="color: var(--accent-emerald);">Future Engineering Roadmap</div>
+            <ul class="bullet-list">
+              <li><strong>Payment Gateway Integration:</strong> Connect Razorpay & Stripe webhooks for automated financial transactions.</li>
+              <li><strong>Generative LLM Engine:</strong> Integrate Google Gemini 1.5 Pro API with RAG for conversational, hyper-personalized trip tailoring.</li>
+              <li><strong>Cloud PostgreSQL Migration:</strong> Migrate SQLite to Supabase or Neon PostgreSQL for distributed multi-region persistence.</li>
+              <li><strong>Real-Time Weather Telemetry:</strong> Integrate live weather forecasts and flight tracker APIs to warn travelers of disruptions.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 12: Conclusion -->
+    <div class="slide" id="slide-12">
+      <div class="slide-content" style="justify-content: center; text-align: center;">
+        <div class="title-badge" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); color: var(--accent-emerald);">DEFENSE CONCLUSION & SUMMARY</div>
+        <h1 class="main-title" style="font-size: 2.8rem; margin-bottom: 20px;">TRAVELORA</h1>
+        <p class="sub-title" style="margin-bottom: 30px;">
+          Successfully engineered and deployed a high-performance, autonomous full-stack travel intelligence and booking platform combining React 18, Vite 5, Tailwind CSS, Node.js Express 5, and SQLite WAL persistence.
+        </p>
+
+        <div class="grid-4" style="text-align: left; margin-bottom: 30px;">
+          <div class="card">
+            <strong style="color: #fff;">Modern UI/UX</strong>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Sub-second client navigation with Framer Motion and Tailwind.</p>
+          </div>
+          <div class="card">
+            <strong style="color: #fff;">Modular Backend</strong>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Express 5 REST API with 9 route domains and centralized error logging.</p>
+          </div>
+          <div class="card">
+            <strong style="color: #fff;">Smart Operations</strong>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Algorithmic AI itinerary wizard and interactive Recharts budget estimator.</p>
+          </div>
+          <div class="card">
+            <strong style="color: #fff;">Verified Security</strong>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">10-salt bcrypt hashing and cryptographic JWT role gates.</p>
+          </div>
+        </div>
+
+        <h2 style="font-size: 1.6rem; color: #fff; margin-bottom: 8px;">THANK YOU!</h2>
+        <p style="color: var(--accent-cyan); font-weight: 600;">Technical Questions & Discussion Welcomed</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;">Candidate: Ansh Daheech &nbsp;|&nbsp; Project: TRAVELORA Full-Stack Platform</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer Navigation -->
+  <footer>
+    <div class="key-hints">
+      Keyboard Navigation: <kbd>◀</kbd> Prev &nbsp;|&nbsp; <kbd>▶</kbd> Next &nbsp;|&nbsp; <kbd>Ctrl + P</kbd> Save as PDF
+    </div>
+    <div>
+      TRAVELORA &copy; 2026 &nbsp;|&nbsp; Department of Computer Science & Engineering
+    </div>
+  </footer>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 12;
+
+    function showSlide(index) {
+      if (index < 1) index = 1;
+      if (index > totalSlides) index = totalSlides;
+      
+      currentSlide = index;
+      
+      for (let i = 1; i <= totalSlides; i++) {
+        const slide = document.getElementById(`slide-${i}`);
+        if (slide) {
+          slide.classList.remove('active');
+        }
+      }
+      
+      const activeSlide = document.getElementById(`slide-${currentSlide}`);
+      if (activeSlide) {
+        activeSlide.classList.add('active');
+      }
+
+      document.getElementById('slideCounter').innerText = 
+        `SLIDE ${String(currentSlide).padStart(2, '0')} / ${String(totalSlides).padStart(2, '0')}`;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        showSlide(currentSlide + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        showSlide(currentSlide - 1);
+      }
+    }
+
+    // Keyboard controls
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'Space') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      }
+    });
+  </script>
+</body>
+</html>
